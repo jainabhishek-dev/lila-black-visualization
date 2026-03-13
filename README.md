@@ -17,6 +17,8 @@ https://lila-black-visualization.vercel.app/
   - Storm Deaths
   - Loot Zones
   - High Traffic / Player Movement
+- **Analytics Dashboard (Planned)**: High-level data aggregations using Recharts to present statistics without scrubbing individual matches.
+- **AI Level Designer Assistant (Planned)**: A ChatGPT-style interface powered by Gemini API and Supabase MCP, allowing designers to query the underlying PostgreSQL database directly using natural language.
 
 ## Technology Stack
 *   **Frontend**: React (18), Vite, HTML5 Canvas (for rendering high-volume event data smoothly).

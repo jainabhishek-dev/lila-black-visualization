@@ -24,3 +24,20 @@ Using the constructed Player Journey Visualization Tool on the provided baseline
 *   **Actionable Impact & Metrics:** Players are getting trapped outside the safe zone and dying not due to combat, but due to terrain traversal difficulty.
     *   **Core Metric to Track:** *Percentage of overall `KilledByStorm` events per map quadrant.*
 *   **Why a Level Designer Cares:** A Level Designer should review the physical geometry of these specific "storm death" zones. Adding a zipline, a broken bridge, or jump pads out of these choke points will allow players to rotate smoothly. The storm should funnel gameplay, not act as a cheap environmental trap due to poor cliff-face readability.
+
+---
+
+## Future Enhancements: Analytics & AI Chat Extensions
+
+While the base visualization tool provides exceptional geospatial analysis, I have designed architectural patterns for two major system extensions to provide macro-level insights:
+
+### 1. Analytics Dashboard
+A dedicated tab utilizing `recharts` to render global statistical insights fetched directly from Supabase. This will allow Level Designers to instantly view:
+* Total matches aggregated by day/map.
+* Average survival rates of Humans vs. Bots.
+* Ratio breakdowns of distinct event types (Looting vs. Combat).
+
+### 2. AI Chat Assistant (Gemini API + Supabase MCP)
+We are integrating an LLM-powered chat interface directly into the tool. 
+*   **How it works:** By securely hosting an Express.js backend running the `@supabase/mcp` Model Context Protocol, we can grant the **Gemini API** direct, read-only awareness of the entire PostgreSQL database schema.
+*   **Designer Experience:** A Level Designer can type natural language questions (*"How many human players played AmbroseValley on Feb 12th?"* or *"What is the average number of kills in Lockdown?"*). Gemini will synthesize the prompt, execute the required SQL query via the MCP context, and return a data-backed response instantly.
