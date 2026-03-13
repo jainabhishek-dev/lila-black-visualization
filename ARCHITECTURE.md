@@ -38,3 +38,24 @@ To solve this, we projected the 3D space onto the 2D plane by discarding the ver
 | :--- | :--- | :--- |
 | **Full backend vs. Direct DB calls** | Evaluated building an Express.js API vs querying Supabase directly from the client. Decided to **query directly**. | Given the timeline (5 days), creating a proprietary API layer added unneeded boilerplate. Supabase handles Row Level Security safely in production. |
 | **Global Heatmaps vs Match Heatmaps** | Allowed heatmaps to generate globally or mapped strictly to match data. | Due to dataset size, Heatmaps currently derive from the singular active Match for high-fidelity accuracy rather than blurring millions of events globally. |
+
+## Next Plan: Analytics & AI Chat Extensions
+
+### 1. Analytics Dashboard
+**Goal:** Provide key statistical insights visually without needing to scrub individual matches.
+**Stack:** `recharts` (React charting library).
+**Architecture:** 
+- Add a new tab/route in the frontend: `Visualizer | Analytics | Chat`.
+- Create a new `Analytics.jsx` component.
+- The component will fetch aggregate data from the Supabase `matches` and `events` table (e.g., Total matches per day, average humans vs bots, breakdown of event types).
+- Data will be displayed using Bar Charts and Pie Charts for quick visual consumption by Level Designers.
+
+### 2. AI Chat Page (Gemini + Supabase MCP)
+**Goal:** Allow Level Designers to ask natural language questions (e.g., "Which area of AmbroseValley has the most traffic?") and get data-backed answers.
+**Stack:** Gemini API (`@google/genai`), `@modelcontextprotocol/sdk`, Express.js.
+**Architecture:**
+Because MCP servers (like `@supabase/mcp`) run as standard IO (stdio) child processes, they cannot easily be hosted in Vercel Serverless Functions. 
+- We will build a lightweight local Node.js Express server (`chat-backend/server.js`) that runs alongside the React app.
+- This backend will securely hold the `GEMINI_API_KEY` and the `SUPABASE_SERVICE_ROLE_KEY`.
+- It will use the MCP Client SDK to spawn the `npx -y @supabase/mcp` process, giving the Gemini agent complete schema awareness and read access to the database.
+- We will create a `Chat.jsx` frontend component offering a ChatGPT-style interface. When a user asks a question, the frontend sends it to the Express backend. The Gemini agent uses the Supabase MCP to dynamically generate and execute PostgreSQL queries, analyzes the returned data, and responds to the designer.
