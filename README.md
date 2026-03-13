@@ -3,7 +3,7 @@
 This repository contains a full-stack web-based visualization tool designed for Level Designers to explore player behavior, analyze match flow, and identify gameplay hotspots in **LILA BLACK**.
 
 ## Deployed Access
-*(Awaiting Live Vercel URL - To be added after deployment)*
+https://lila-black-visualization.vercel.app/
 
 ## Features
 - **Interactive Minimaps**: View precise player movement and events overlaid onto high-res maps (`AmbroseValley`, `GrandRift`, `Lockdown`).
